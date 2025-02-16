@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Steganography Web App</h1>
+        
+        <!-- Display flashed messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form action="/encrypt" method="post" enctype="multipart/form-data">
+            <h2>Encrypt Message</h2>
+            <input type="file" name="image" accept="image/jpeg, image/png" required>
+            <textarea name="message" placeholder="Enter your message" required></textarea>
+           <button type="submit">Encrypt and Download Image</button>
+        </form>
+
+        <form action="/decrypt" method="post" enctype="multipart/form-data">
+            <h2>Decrypt Message</h2>
+            <input type="file" name="image" accept="image/jpeg, image/png" required>
+            <button type="submit">Decrypt Message</button>
+        </form>
+
+        {% if decrypted_message %}
+        <p>Decrypted Message:<b> <mark> {{ decrypted_message }}</mark> </b></p>
+        {% endif %}
+
+    </div>
+</body>
+</html>
